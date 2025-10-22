@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ sucursal.nombre_cine }} | Cinepolis{% endblock %}
+
+{% block contenido %}
+<article class="sucursal-detail">
+    <div class="sucursal-banner">
+        {% if sucursal.imagen_sucursal %}
+            <img src="{{ sucursal.imagen_sucursal.url }}" alt="Imagen de {{ sucursal.nombre_cine }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">🎭</div>
+        {% endif %}
+        <div class="sucursal-info">
+            <h1>{{ sucursal.nombre_cine }}</h1>
+            <h3>{{ sucursal.ciudad }}</h3>
+        </div>
+    </div>
+    
+    <div class="sucursal-details">
+        <p><strong>Dirección:</strong> {{ sucursal.direccion }}</p>
+        <p><strong>Teléfono:</strong> {{ sucursal.telefono }}</p>
+        <p><strong>Número de Salas:</strong> {{ sucursal.numero_salas }}</p>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_sucural_sala:editar_sucursal' sucursal.id_sucursal %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_sucural_sala:borrar_sucursal' sucursal.id_sucursal %}" class="btn btn-danger">🗑️ Borrar</a>
+    </div>
+
+    <section class="salas-section">
+        <h2>Salas de esta Sucursal</h2>
+        {% if sucursal.salas.all %}
+        <ul class="sala-list">
+            {% for sala in sucursal.salas.all %}
+            <li>
+                <strong>Sala {{ sala.numero_sala }}</strong> - 
+                {{ sala.tipo_sala }} | 
+                Capacidad: {{ sala.capacidad }} | 
+                Estado: {{ sala.estado }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-message">Esta sucursal no tiene salas registradas.</p>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}

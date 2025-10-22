@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block titulo %}Eliminar Sucursal | Cinepolis{% endblock %}
+
+{% block contenido %}
+<h2>¿Estás seguro de que quieres borrar "{{ sucursal.nombre_cine }}"?</h2>
+<p>Esta acción no se puede deshacer y se eliminarán todas las salas asociadas.</p>
+<form method="post">
+    {% csrf_token %}
+    <div class="actions">
+        <button type="submit" class="btn btn-danger">Sí, Borrar</button>
+        <a href="{% url 'app_sucural_sala:detalle_sucursal' sucursal.id_sucursal %}" class="btn">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

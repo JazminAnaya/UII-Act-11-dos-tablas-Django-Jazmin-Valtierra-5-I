@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block titulo %}Sucursales | Cinepolis{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Sucursales Registradas</h2>
+    <a href="{% url 'app_sucural_sala:crear_sucursal' %}" class="btn btn-primary">+ Agregar Sucursal</a>
+</div>
+
+<ul class="sucursal-grid">
+    {% for sucursal in sucursales %}
+    <li class="sucursal-card">
+        <a href="{% url 'app_sucural_sala:detalle_sucursal' sucursal.id_sucursal %}">
+            {% if sucursal.imagen_sucursal %}
+                <img src="{{ sucursal.imagen_sucursal.url }}" alt="Imagen de {{ sucursal.nombre_cine }}" class="sucursal-img">
+            {% else %}
+                <div class="sucursal-placeholder">🎭</div>
+            {% endif %}
+            <h3>{{ sucursal.nombre_cine }}</h3>
+            <p class="sucursal-city">{{ sucursal.ciudad }}</p>
+            <p class="sucursal-info">📞 {{ sucursal.telefono }}</p>
+            <p class="sucursal-info">🎦 {{ sucursal.numero_salas }} salas</p>
+        </a>
+    </li>
+    {% empty %}
+    <li class="no-sucursales">No hay sucursales registradas.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
